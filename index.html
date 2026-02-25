@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CRM Elite — Gestão de Relacionamento</title>
+  <meta name="description" content="CRM Elite: plataforma inteligente de gestão de clientes, pipeline de vendas e tarefas, com dashboard analítico em tempo real." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<!-- ===== SIDEBAR ===== -->
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-logo">
+    <div class="logo-icon">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+        <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="url(#grad1)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+        <defs>
+          <linearGradient id="grad1" x1="2" y1="2" x2="22" y2="22" gradientUnits="userSpaceOnUse">
+            <stop stop-color="#a78bfa"/>
+            <stop offset="1" stop-color="#38bdf8"/>
+          </linearGradient>
+        </defs>
+      </svg>
+    </div>
+    <span class="logo-text">CRM <strong>Elite</strong></span>
+  </div>
+
+  <nav class="sidebar-nav">
+    <button class="nav-item active" data-page="dashboard" id="nav-dashboard">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+      <span>Dashboard</span>
+    </button>
+    <button class="nav-item" data-page="contacts" id="nav-contacts">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+      <span>Contatos</span>
+      <span class="badge" id="badge-contacts">0</span>
+    </button>
+    <button class="nav-item" data-page="pipeline" id="nav-pipeline">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+      <span>Pipeline</span>
+      <span class="badge" id="badge-pipeline">0</span>
+    </button>
+    <button class="nav-item" data-page="tasks" id="nav-tasks">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+      <span>Tarefas</span>
+      <span class="badge badge-warn" id="badge-tasks">0</span>
+    </button>
+    <button class="nav-item" data-page="reports" id="nav-reports">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+      <span>Relatórios</span>
+    </button>
+  </nav>
+
+  <div class="sidebar-footer">
+    <div class="user-avatar">DL</div>
+    <div class="user-info">
+      <span class="user-name">Dluz Games</span>
+      <span class="user-role">Admin</span>
+    </div>
+  </div>
+</aside>
+
+<!-- ===== MAIN ===== -->
+<main class="main-content">
+
+  <!-- TOP BAR -->
+  <header class="topbar">
+    <div class="topbar-left">
+      <button class="menu-toggle" id="menuToggle" aria-label="Toggle sidebar">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
+      <h1 class="page-title" id="pageTitle">Dashboard</h1>
+    </div>
+    <div class="topbar-right">
+      <div class="search-box">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <input type="text" placeholder="Buscar..." id="globalSearch" />
+      </div>
+      <button class="topbar-btn" id="notifBtn" aria-label="Notificações">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+        <span class="notif-dot"></span>
+      </button>
+      <button class="btn btn-primary" id="primaryActionBtn">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        Novo
+      </button>
+    </div>
+  </header>
+
+  <!-- ============================================================ -->
+  <!-- PAGE: DASHBOARD                                              -->
+  <!-- ============================================================ -->
+  <section class="page active" id="page-dashboard">
+    <div class="stats-grid">
+      <div class="stat-card" style="--accent:#a78bfa">
+        <div class="stat-icon" style="background:rgba(167,139,250,.15)">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#a78bfa" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+        </div>
+        <div class="stat-info">
+          <span class="stat-label">Total Clientes</span>
+          <span class="stat-value" id="stat-clients">0</span>
+          <span class="stat-change positive">↑ 12% este mês</span>
+        </div>
+      </div>
+      <div class="stat-card" style="--accent:#38bdf8">
+        <div class="stat-icon" style="background:rgba(56,189,248,.15)">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+        </div>
+        <div class="stat-info">
+          <span class="stat-label">Deals Abertos</span>
+          <span class="stat-value" id="stat-deals">0</span>
+          <span class="stat-change positive">↑ 8% esta semana</span>
+        </div>
+      </div>
+      <div class="stat-card" style="--accent:#34d399">
+        <div class="stat-icon" style="background:rgba(52,211,153,.15)">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#34d399" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+        </div>
+        <div class="stat-info">
+          <span class="stat-label">Receita Prevista</span>
+          <span class="stat-value" id="stat-revenue">R$ 0</span>
+          <span class="stat-change positive">↑ 24% este mês</span>
+        </div>
+      </div>
+      <div class="stat-card" style="--accent:#fb923c">
+        <div class="stat-icon" style="background:rgba(251,146,60,.15)">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fb923c" stroke-width="2"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+        </div>
+        <div class="stat-info">
+          <span class="stat-label">Tarefas Pendentes</span>
+          <span class="stat-value" id="stat-tasks">0</span>
+          <span class="stat-change negative">↓ 3 vencidas</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="dashboard-grid">
+      <!-- Chart -->
+      <div class="card chart-card">
+        <div class="card-header">
+          <h3>Vendas por Mês</h3>
+          <div class="chart-legend">
+            <span class="legend-item"><i style="background:#a78bfa"></i>2024</span>
+            <span class="legend-item"><i style="background:#38bdf8"></i>2025</span>
+          </div>
+        </div>
+        <div class="chart-area">
+          <canvas id="salesChart"></canvas>
+        </div>
+      </div>
+
+      <!-- Funnel -->
+      <div class="card funnel-card">
+        <div class="card-header"><h3>Funil de Vendas</h3></div>
+        <div class="funnel-wrap" id="funnelWrap"></div>
+      </div>
+
+      <!-- Recent Activity -->
+      <div class="card activity-card">
+        <div class="card-header"><h3>Atividade Recente</h3></div>
+        <ul class="activity-list" id="activityList"></ul>
+      </div>
+
+      <!-- Top Contacts -->
+      <div class="card top-contacts-card">
+        <div class="card-header"><h3>Top Clientes</h3></div>
+        <ul class="top-list" id="topContactsList"></ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- PAGE: CONTACTS                                               -->
+  <!-- ============================================================ -->
+  <section class="page" id="page-contacts">
+    <div class="page-controls">
+      <div class="search-filter">
+        <div class="search-box">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          <input type="text" placeholder="Buscar contatos..." id="contactSearch" />
+        </div>
+        <select class="filter-select" id="contactFilter">
+          <option value="all">Todos</option>
+          <option value="client">Cliente</option>
+          <option value="lead">Lead</option>
+          <option value="prospect">Prospect</option>
+        </select>
+      </div>
+      <div class="view-toggle">
+        <button class="view-btn active" id="viewGrid" aria-label="Grade">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+        </button>
+        <button class="view-btn" id="viewList" aria-label="Lista">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+        </button>
+      </div>
+    </div>
+    <div class="contacts-grid" id="contactsGrid"></div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- PAGE: PIPELINE (KANBAN)                                      -->
+  <!-- ============================================================ -->
+  <section class="page" id="page-pipeline">
+    <div class="kanban-board" id="kanbanBoard"></div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- PAGE: TASKS                                                  -->
+  <!-- ============================================================ -->
+  <section class="page" id="page-tasks">
+    <div class="page-controls">
+      <div class="tabs" id="taskTabs">
+        <button class="tab active" data-filter="all">Todas</button>
+        <button class="tab" data-filter="pending">Pendentes</button>
+        <button class="tab" data-filter="done">Concluídas</button>
+        <button class="tab" data-filter="overdue">Vencidas</button>
+      </div>
+    </div>
+    <div class="tasks-list" id="tasksList"></div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- PAGE: REPORTS                                                -->
+  <!-- ============================================================ -->
+  <section class="page" id="page-reports">
+    <div class="reports-grid">
+      <div class="card">
+        <div class="card-header"><h3>Conversão por Etapa</h3></div>
+        <div class="chart-area small"><canvas id="conversionChart"></canvas></div>
+      </div>
+      <div class="card">
+        <div class="card-header"><h3>Clientes por Status</h3></div>
+        <div class="chart-area small doughnut-area"><canvas id="statusChart"></canvas></div>
+      </div>
+      <div class="card full-width">
+        <div class="card-header"><h3>Performance Mensal de Deals</h3></div>
+        <div class="chart-area"><canvas id="performanceChart"></canvas></div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ===== MODALS ===== -->
+
+<!-- Contact Modal -->
+<div class="modal-overlay" id="contactModal">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="contactModalTitle">
+    <div class="modal-header">
+      <h2 id="contactModalTitle">Novo Contato</h2>
+      <button class="modal-close" id="closeContactModal" aria-label="Fechar">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-row">
+        <div class="form-group">
+          <label for="c-name">Nome *</label>
+          <input type="text" id="c-name" placeholder="Nome completo" />
+        </div>
+        <div class="form-group">
+          <label for="c-company">Empresa</label>
+          <input type="text" id="c-company" placeholder="Nome da empresa" />
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="c-email">E-mail *</label>
+          <input type="email" id="c-email" placeholder="email@empresa.com" />
+        </div>
+        <div class="form-group">
+          <label for="c-phone">Telefone</label>
+          <input type="tel" id="c-phone" placeholder="(00) 00000-0000" />
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="c-status">Status</label>
+          <select id="c-status">
+            <option value="lead">Lead</option>
+            <option value="prospect">Prospect</option>
+            <option value="client">Cliente</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="c-value">Valor (R$)</label>
+          <input type="number" id="c-value" placeholder="0,00" min="0" />
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="c-notes">Notas</label>
+        <textarea id="c-notes" rows="3" placeholder="Observações..."></textarea>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" id="cancelContactModal">Cancelar</button>
+      <button class="btn btn-primary" id="saveContact">Salvar Contato</button>
+    </div>
+  </div>
+</div>
+
+<!-- Deal Modal -->
+<div class="modal-overlay" id="dealModal">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="dealModalTitle">
+    <div class="modal-header">
+      <h2 id="dealModalTitle">Novo Deal</h2>
+      <button class="modal-close" id="closeDealModal" aria-label="Fechar">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-row">
+        <div class="form-group">
+          <label for="d-title">Título *</label>
+          <input type="text" id="d-title" placeholder="Descrição do deal" />
+        </div>
+        <div class="form-group">
+          <label for="d-contact">Contato</label>
+          <select id="d-contact"><option value="">Selecione...</option></select>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="d-value">Valor (R$) *</label>
+          <input type="number" id="d-value" placeholder="0,00" min="0" />
+        </div>
+        <div class="form-group">
+          <label for="d-stage">Etapa</label>
+          <select id="d-stage">
+            <option value="lead">Lead</option>
+            <option value="qualified">Qualificado</option>
+            <option value="proposal">Proposta</option>
+            <option value="negotiation">Negociação</option>
+            <option value="won">Ganho</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="d-prob">Probabilidade (%)</label>
+          <input type="number" id="d-prob" placeholder="50" min="0" max="100" value="50" />
+        </div>
+        <div class="form-group">
+          <label for="d-close">Previsão de Fechamento</label>
+          <input type="date" id="d-close" />
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" id="cancelDealModal">Cancelar</button>
+      <button class="btn btn-primary" id="saveDeal">Salvar Deal</button>
+    </div>
+  </div>
+</div>
+
+<!-- Task Modal -->
+<div class="modal-overlay" id="taskModal">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="taskModalTitle">
+    <div class="modal-header">
+      <h2 id="taskModalTitle">Nova Tarefa</h2>
+      <button class="modal-close" id="closeTaskModal" aria-label="Fechar">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-group">
+        <label for="t-title">Título *</label>
+        <input type="text" id="t-title" placeholder="Descrição da tarefa" />
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="t-contact">Contato</label>
+          <select id="t-contact"><option value="">Nenhum</option></select>
+        </div>
+        <div class="form-group">
+          <label for="t-due">Vencimento</label>
+          <input type="date" id="t-due" />
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="t-priority">Prioridade</label>
+        <select id="t-priority">
+          <option value="low">Baixa</option>
+          <option value="medium" selected>Média</option>
+          <option value="high">Alta</option>
+        </select>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" id="cancelTaskModal">Cancelar</button>
+      <button class="btn btn-primary" id="saveTask">Salvar Tarefa</button>
+    </div>
+  </div>
+</div>
+
+<!-- Contact Detail Modal -->
+<div class="modal-overlay" id="contactDetailModal">
+  <div class="modal modal-lg" role="dialog" aria-modal="true" aria-labelledby="contactDetailTitle">
+    <div class="modal-header">
+      <h2 id="contactDetailTitle">Detalhes do Contato</h2>
+      <button class="modal-close" id="closeContactDetail" aria-label="Fechar">✕</button>
+    </div>
+    <div class="modal-body" id="contactDetailBody"></div>
+    <div class="modal-footer">
+      <button class="btn btn-danger" id="deleteContactBtn">Excluir</button>
+      <button class="btn btn-primary" id="editContactBtn">Editar</button>
+    </div>
+  </div>
+</div>
+
+<!-- Toast -->
+<div class="toast-container" id="toastContainer"></div>
+
+<script src="app.js"></script>
+</body>
+</html>
